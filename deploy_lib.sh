@@ -67,4 +67,6 @@ handle_deploy() {
 
     # after all, save into the deploy directory a .version with the revision
     echo $version > ${DEPLOY_DIR}/.version
+
+    echo 'ok' | pretty_print_destination
 }
