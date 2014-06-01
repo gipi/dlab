@@ -87,3 +87,9 @@ init_deploy() {
 
     mkdir -p "${DEPLOY_DIR}"
 }
+
+get_modified_files() {
+    START="$1"
+    END="$2"
+    git diff --stat ${START}..${END} | sed '$d' | awk -F "|" '{print $1}'
+}
