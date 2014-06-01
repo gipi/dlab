@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# first of all check a pip file exists
+REQUIREMENTS=$(readlink "${DEPLOY_DIR}"/requirements.txt)
+if [ ! -f "${REQUIREMENTS}" ];
+then
+    echo 'WTF!!!!'
+    return 0
+fi
+
+# here we are
+pip install -r "${REQUIREMENTS}"

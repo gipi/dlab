@@ -74,6 +74,11 @@ handle_deploy() {
     # after all, save into the deploy directory a .version with the revision
     echo $version > ${DEPLOY_DIR}/.version
 
+    for hook in $(ls ${DEPLOY_DIR}/hooks/*);
+    do
+        ${hook}
+    done
+
     echo 'ok' | pretty_print_destination
 }
 
