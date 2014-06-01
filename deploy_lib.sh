@@ -76,3 +76,14 @@ handle_deploy() {
 
     echo 'ok' | pretty_print_destination
 }
+
+init_deploy() {
+    DEPLOY_DIR="$1"
+    # check the destination directory doesn't exist
+    test -d "${DEPLOY_DIR}" && {
+        echo 'fatal: '${DEPLOY_DIR}' already exists' | pretty_print_destination
+        return 1
+    }
+
+    mkdir -p "${DEPLOY_DIR}"
+}
