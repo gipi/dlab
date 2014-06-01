@@ -6,6 +6,7 @@
 #   $ source deploy_lib.sh "/path/to/web/root"
 #   $ deploy
 #
+MAGIC='DLAB/0.0.1'
 
 test -z "$1" && {
     echo 'use as first argument the directory where deploy'
@@ -38,7 +39,7 @@ pretty_print_destination() {
 
 deploy() {
     echo 'sending' | pretty_print_client
-    (get_revision;get_deploy_path;get_archive) | ${REMOTE_COMMAND} ${DEPLOY_COMMAND} || {
+    (echo ${MAGIC};get_revision;get_deploy_path;get_archive) | ${REMOTE_COMMAND} ${DEPLOY_COMMAND} || {
         echo " FATAL: some error occured, have you set the correct host in .ssh/config?"
         return
     }
@@ -58,6 +59,11 @@ get_deploy_path() {
 
 # to be used in the remote side
 handle_deploy() {
+    read magic;
+    test "${magic}" == "${MAGIC}" || {
+        echo 'fatal: signature not found'
+        return 1
+    }
     read version;
     read deploy_path;
     old_version=$(cat ${DEPLOY_DIR}/.version)
