@@ -18,9 +18,10 @@ Philosophy
 Usage (not implemented yet)
 ---------------------------
 
-First of all you need to install server side:
+First of all you need to install server side: edit a file name ``.deploy_ssh_config``
+like a ``ssh`` config file; after that
 
-    $ dlab install user@domain <project name> <project type>
+    $ dlab init <public key path> <remote path> <project type>
 
 ``project type`` select the stack you want to manage with this application,
 for now it's possible to manage ``static`` and ``python`` application. This
