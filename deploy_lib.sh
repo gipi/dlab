@@ -90,6 +90,29 @@ _ssh_copy_id() {
     umask 077;
     mkdir -p .ssh && cat >> .ssh/authorized_keys || exit 1;"
 }
+
+_dump_ssh_config() {
+    HOST_KEY="default"
+    # usage: <user> <host> <key> [<port>]
+    USER=$1
+    HOST=$2
+    KEY=${3}
+    PORT=${4:-22}
+    cat >> ${DEPLOY_CONFIG_FILE} <<EOF
+Host ${HOST_KEY}
+  HostName ${HOST}
+  User ${USER}
+  Port ${PORT}
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile ${KEY}
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+EOF
+}
+
 init_deploy() {
     DEPLOY_DIR="$1"
     # check the destination directory doesn't exist
