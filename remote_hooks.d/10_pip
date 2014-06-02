@@ -2,11 +2,9 @@
 
 # first of all check a pip file exists
 REQUIREMENTS=$(readlink "${DEPLOY_DIR}"/requirements.txt)
-if [ ! -f "${REQUIREMENTS}" ];
+if [ -f "${REQUIREMENTS}" ];
 then
-    echo 'WTF!!!!'
-    return 0
-fi
 
-# here we are
-pip install -r "${REQUIREMENTS}"
+    # here we are
+    pip install -r "${REQUIREMENTS}"
+fi
