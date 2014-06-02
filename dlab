@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -euo pipefail
+
+. deploy_lib.sh
+
+case "$1" in
+    init)
+        shift
+        # <key> <deploy dir>
+        init_deploy "$1" "$2"
+        ;;
+    deploy)
+        shift;;
+esac

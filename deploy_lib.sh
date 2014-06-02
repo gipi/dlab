@@ -78,15 +78,6 @@ handle_deploy() {
     echo 'ok' | pretty_print_destination
 }
 
-# the original version doesn't allow to pass all the parameters
-# we need to ssh
-_ssh_copy_id() {
-    KEY="${1?"fatal: missing public key"}"
-    echo -n "command=\"ls -l\" " | cat - ${KEY} | ssh -F "${DEPLOY_CONFIG_FILE}" default "
-    umask 077;
-    mkdir -p .ssh && cat >> .ssh/authorized_keys || exit 1;"
-}
-
 _dump_ssh_config() {
     HOST_KEY="default"
     # usage: <user> <host> <key> [<port>]
@@ -109,15 +100,26 @@ Host ${HOST_KEY}
 EOF
 }
 
+# copy the remote code necessary by tar
+# initialize the ssh authorized key
 init_deploy() {
-    DEPLOY_DIR="$1"
-    # check the destination directory doesn't exist
-    test -d "${DEPLOY_DIR}" && {
-        echo 'fatal: '${DEPLOY_DIR}' already exists' | pretty_print_destination
-        return 1
-    }
+    # First of all configure the key
+    KEY_PATH="${1?"fatal: missing public key"}"
+    DEPLOY_DIR="${2?"missing deploy directory value?"}"
+    # create a temporary directory where do the stuff
+    TEMPDIR=$(mktemp -d)
+    git archive HEAD -- remote | tar -x -C "${TEMPDIR}"
+    # copy
+    cp ${KEY_PATH} "${TEMPDIR}"/id_rsa.pub
 
-    mkdir -p "${DEPLOY_DIR}"
+    # do the remote side stuff
+    (cd ${TEMPDIR}; tar c .) | ssh -F "${DEPLOY_CONFIG_FILE}" default "
+    mkdir -p ${DEPLOY_DIR}/.deploy;
+    cat | tar -x -C ${DEPLOY_DIR}/.deploy;
+    umask 077;
+    echo 'copying key'
+    mkdir -p .ssh && cat ${DEPLOY_DIR}/.deploy/id_rsa.pub >> .ssh/authorized_keys;
+    "
 }
 
 get_modified_files() {
