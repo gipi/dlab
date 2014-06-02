@@ -9,11 +9,6 @@
 MAGIC='DLAB/0.0.1'
 DEPLOY_CONFIG_FILE=${DEPLOY_CONFIG_FILE:-.deploy_ssh_config}
 
-test -z "$1" && {
-    echo 'use as first argument the directory where deploy'
-    return;
-}
-
 DEPLOY_DIR=${1:-/tmp/app}
 
 REMOTE_COMMAND=
