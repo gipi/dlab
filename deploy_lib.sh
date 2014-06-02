@@ -9,14 +9,6 @@
 MAGIC='DLAB/0.0.1'
 DEPLOY_CONFIG_FILE=${DEPLOY_CONFIG_FILE:-.deploy_ssh_config}
 
-DEPLOY_DIR=${1:-/tmp/app}
-
-REMOTE_COMMAND=
-REMOTE_COMMAND="ssh vagrant"
-#DEPLOY_COMMAND=tar t
-DEPLOY_COMMAND=". /vagrant/deploy/lib.sh ${DEPLOY_DIR} ;handle_deploy"
-TAR_COMMAND="tar -C ${DEPLOY_DIR} -x"
-
 pretty_print_stdout() {
     PP_PREFIX=$1
     while read line;
