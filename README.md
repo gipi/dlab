@@ -10,6 +10,7 @@ remote machine.
 Philosophy
 ----------
 
+ - Use what already exist (ssh, tar, git)
  - Make all the possible local
  - Do all automagically
  - Allow to fallback to a shell when errors happen
