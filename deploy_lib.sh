@@ -82,6 +82,14 @@ handle_deploy() {
     echo 'ok' | pretty_print_destination
 }
 
+# the original version doesn't allow to pass all the parameters
+# we need to ssh
+_ssh_copy_id() {
+    KEY="${1?"fatal: missing public key"}"
+    echo -n "command=\"ls -l\" " | cat - ${KEY} | ssh -F "${DEPLOY_CONFIG_FILE}" default "
+    umask 077;
+    mkdir -p .ssh && cat >> .ssh/authorized_keys || exit 1;"
+}
 init_deploy() {
     DEPLOY_DIR="$1"
     # check the destination directory doesn't exist
