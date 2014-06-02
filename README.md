@@ -33,3 +33,19 @@ After that is possible to deploy with a simple
     $ dlab deploy
     <- sending
     -> deploying revision: fb3c0ca -> 1e21e54 into /var/www/foobar/
+
+VAGRANT
+-------
+
+It's possible to have a quick testing machine using vagrant: simply
+start the box using
+
+    $ vagrant up
+
+and after that dump the ssh configuration file
+
+    $ vagrant ssh-config > .vagrant_ssh_config
+
+and use it to initialize the deploy
+
+    $ DEPLOY_SSH_CONFIG=.vagrant_ssh_config ./dlab <public key> /remote/path
