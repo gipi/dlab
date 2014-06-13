@@ -48,4 +48,4 @@ and after that dump the ssh configuration file
 
 and use it to initialize the deploy
 
-    $ DEPLOY_SSH_CONFIG=.vagrant_ssh_config ./dlab <public key> /remote/path
+    $ DEPLOY_SSH_CONFIG=.vagrant_ssh_config ./dlab init <public key> /remote/path
