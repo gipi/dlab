@@ -4,6 +4,16 @@ set -euo pipefail
 
 . deploy_lib.sh
 
+usage() {
+    cat <<-EOF
+    usage: $(basename $0) init <pub key path> <remote path>
+           $(basename $0) deploy
+EOF
+    exit 1
+}
+
+test "$#" == 0 && usage
+
 case "$1" in
     init)
         shift
@@ -12,4 +22,7 @@ case "$1" in
         ;;
     deploy)
         shift;;
+    *)
+        usage
+    ;;
 esac
