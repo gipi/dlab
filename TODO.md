@@ -2,3 +2,4 @@
  - add timestamp to version so to have a timeline of releases
  - manage log
  - manage maintenance mode
+ - http://12factor.net/
