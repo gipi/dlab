@@ -36,6 +36,10 @@ After that is possible to deploy with a simple
     <- sending
     -> deploying revision: fb3c0ca -> 1e21e54 into /var/www/foobar/
 
+Later is possible to configure the running parameters
+
+    $ dlab configure set DB_HOST='user@example.com'
+
 VAGRANT
 -------
 
