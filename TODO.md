@@ -1,0 +1,2 @@
+ - Configuration by environment variables on remote side
+ - add timestamp to version so to have a timeline of releases
