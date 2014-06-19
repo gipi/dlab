@@ -7,6 +7,8 @@ their stack (containers, git repository on the remote side etc...) so
 these are scripts to manage deploying having only ssh access to the
 remote machine.
 
+[![Build Status](https://travis-ci.org/gipi/dlab.svg?branch=master)](https://travis-ci.org/gipi/dlab)
+
 Philosophy
 ----------
 
