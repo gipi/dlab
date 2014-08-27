@@ -98,6 +98,8 @@ init_deploy() {
     # First of all configure the key
     KEY_PATH="${1?"fatal: missing public key"}"
     DEPLOY_DIR="${2?"missing deploy directory value?"}"
+    # we pass all the remaining arguments to SSH
+    shift 2
     # create a temporary directory where do the stuff
     TEMPDIR=$(mktemp -d)
     git archive HEAD -- remote | tar -x -C "${TEMPDIR}"
@@ -105,7 +107,7 @@ init_deploy() {
     cp ${KEY_PATH} "${TEMPDIR}"/id_rsa.pub
 
     # do the remote side stuff
-    (cd ${TEMPDIR}; tar c .) | ssh -F "${DEPLOY_CONFIG_FILE}" default "
+    (cd ${TEMPDIR}; tar c .) | ssh "$@" "
     mkdir -p ${DEPLOY_DIR}/.deploy;
     cat | tar -x -C ${DEPLOY_DIR}/.deploy;
     umask 077;

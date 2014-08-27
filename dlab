@@ -6,8 +6,9 @@ set -euo pipefail
 
 usage() {
     cat <<-EOF
-    usage: $(basename $0) init <pub key path> <remote path>
-           $(basename $0) deploy
+		usage: $(basename $0) init <pub key path> <remote path> [ssh options]
+		       $(basename $0) remote [command]
+		       $(basename $0) deploy <remote>
 EOF
     exit 1
 }
@@ -17,8 +18,8 @@ test "$#" == 0 && usage
 case "$1" in
     init)
         shift
-        # <key> <deploy dir>
-        init_deploy "$1" "$2"
+        # <key> <deploy dir> <remaining optional ssh options>
+        init_deploy "$@"
         ;;
     deploy)
         shift;;

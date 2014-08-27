@@ -19,3 +19,18 @@ port number).
 
 The command above should create a configuration file named ``production.dlab`` with all
 the informations needed for deploying.
+
+To initialize remote side the deploy enviroment
+
+    $ dlab init ~/.ssh/id_rsa_whatever.pub pub/ vagrant@127.0.0.1 -p 2200
+
+so to obtain a tree like the following
+
+    pub/
+    └── .deploy
+        ├── id_rsa.pub
+        └── remote
+            └── hooks.d
+                ├── 10_pip
+                ├── 20_migrate
+                └── 90_collectstatic
