@@ -119,3 +119,28 @@ get_modified_files() {
     END="$2"
     git diff --stat ${START}..${END} | sed '$d' | awk -F "|" '{print $1}'
 }
+
+build_parameter_from_file_lines() {
+    local FILENAME="${1:?missing filename}"
+    local PARAM="${2:?missing parameter name}"
+
+    test -f "${FILENAME}" || {
+        >&2 echo 'File '${FILENAME}' not found'
+        return 1
+    }
+
+    local OUTPUT=""
+    # the redirection is necessary since otherwise with cat(1) the shell
+    # executes the loop in a subshell not updating the outer OUTPUT variable
+    while read line;
+    do
+        local OUTPUT="${OUTPUT}${PARAM} ${line} "
+    done < ${FILENAME}
+
+    echo ${OUTPUT}
+}
+
+read_file_content() {
+    cat "$1";
+}
+
