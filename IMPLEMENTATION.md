@@ -4,5 +4,6 @@
  - ENV
  - MOUNTS
  - LINKS
- - VERSION
  - NAME
+ - VERSION
+ - IMAGE

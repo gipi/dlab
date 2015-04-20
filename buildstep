@@ -12,12 +12,15 @@ BUILDSTEP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 BASE_DIR="$(readlink -f ${1:?usage: cat release.tar | buildstep <base dir> [<base image>]})"
 
-# TODO: sanitaze user input (you know, ";", "/", "..", "`")
+# TODO: sanitize user input (you know, ";", "/", "..", "`")
 # http://stackoverflow.com/questions/89609/in-a-bash-script-how-do-i-sanitize-user-input
-CLEANSTRING=${STRING//[^a-zA-Z0-9]/}
+#CLEANSTRING=${STRING//[^a-zA-Z0-9]/}
 
 APP_NAME=$(read_file_content "$1/NAME")
+
+# TODO: get the base image from the IMAGE file
 BASE_IMAGE=${2:-progrium/buildstep}
+
 IMAGE="${APP_NAME}/app"
 
 # TODO: add check for app home dir structure (LINKS/MOUNTS/ENV/NAME)
